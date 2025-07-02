@@ -1,13 +1,20 @@
 // import './App.css'
-import SignIn from './components/SignIn'
-
+import SignIn from './components/SignIn';
+//firebase-hooksよりモジュールインポート
+import { useAuthState } from "react-firebase-hooks/auth";
+//firebase.jsよりインポート
+import { auth } from "../firebase";
+import Line from './components/Line.jsx';
 function App() {
-  
+  //ユーザー状態変数,[]がないとサインアウト機能しない注意
+  const [user] = useAuthState(auth);
 
   return (
     <>
       <div>
-        <SignIn />
+        {/* 認証初期状態の判定 */}
+        {user ? <Line /> : <SignIn />}
+        
       </div>
     </>
   );

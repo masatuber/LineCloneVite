@@ -6,6 +6,22 @@
  npm install @mui/material @emotion/react @emotion/styled<br>
  npm install @mui/icons-material<br>
  npm install firebase<br>
+ npm install --save react-firebase-hooks<br>
+
+
+* ファイアーストアのパーミッションが不足エラー
+
+Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.
+
+ルールを変更し公開することで解決
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+
 
 
 
