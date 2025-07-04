@@ -2,17 +2,18 @@
 # サインインの機能より開始する
 <br>
 
-# セットアップ手順↓
+# セットアップ手順↓  
+<br>
  npm install @mui/material @emotion/react @emotion/styled<br>
  npm install @mui/icons-material<br>
  npm install firebase<br>
  npm install --save react-firebase-hooks<br>
 
 
-* ファイアーストアのパーミッションが不足エラー
+* ファイアーストアのパーミッションが不足エラー <br>
+Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.<br>
 
-Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.
-
+```
 ルールを変更し公開することで解決
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -22,8 +23,21 @@ service cloud.firestore {
   }
 }
 
+```
 
+DB全体にアクセス出来ないエラーの解決方法<br>
 
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // コレクション内の任意のドキュメント（documentId）に対するルール
+    match /messages/{documentId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
