@@ -38,6 +38,11 @@ service cloud.firestore {
   }
 }
 ```
+* keyのエラーはドキュメントのIDを参照する
+
+onSnapshotでコレクションを取り出した後、<br>
+ドキュメントのid及びデータをそれぞれdoc.id、doc.dataとして取得しています。<br>
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
