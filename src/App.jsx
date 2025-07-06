@@ -1,9 +1,7 @@
 import './App.css'
 import SignIn from './components/SignIn.jsx';
-//firebase-hooksよりモジュールインポート
-import { useAuthState } from "react-firebase-hooks/auth";
-//firebase.jsよりインポート
-import { auth } from "../firebase.js";
+import { useAuthState } from "react-firebase-hooks/auth"; //firebase-hooksよりモジュールインポート
+import { auth } from "../firebase.js";  //firebase.jsよりインポート
 import Line from './components/Line.jsx';
 function App() {
   //ユーザー状態変数,[]がないとサインアウト機能しない注意

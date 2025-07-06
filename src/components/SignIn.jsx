@@ -12,9 +12,8 @@ function SignIn() {
       .then((response) => {
         // 認証されたユーザー情報格納
         const user = response.user;
-        console.log("認証成功！ ユーザー情報:", user);
+        console.log("認証成功、 ユーザー情報:", user);
 
-        // currentUser もこの時点で利用可能
         const authResult = firebase.auth().currentUser;
         console.log("認証出来ているか (thenの中):", authResult);
 

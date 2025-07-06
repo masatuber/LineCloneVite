@@ -1,15 +1,13 @@
-import React, { useEffect, useState, } from 'react'
-import SignOut from './SignOut';
+//Line.jsx
+import React, { useEffect, useState } from "react";
+import SignOut from "./SignOut";
+import SendMessage from "./SendMessage.jsx";
 import { auth, db } from "../../firebase.js";
-import SendMessage from './SendMessage.jsx';
-import MessageList from './MessageList.jsx';
-
-//dbに格納されているファイアーストアに接続する
+import DeleteIcon from "@mui/icons-material/Delete"; //muiのアイコン
 
 function Line() {
   //メッセージの状態管理,空配列を代入
   const [messages, setMessages] = useState([]);
-
 
   useEffect(() => {
     //コレクションメソッド,Cloud Firestoreにあるコレクションカラムにmessgesが対応する
@@ -32,33 +30,52 @@ function Line() {
   }, []);
   //マウント時に一回だけ発火する仕様
 
+  //ファイアーストアdeleteメソッドは非同期プロミスを返す
+  const deleteMessage = async (id) => {
+    try {
+      await db.collection("messages").doc(id).delete();
+      window.alert("メッセージ削除しました");
+      window.location.reload();
+    } catch (error) {
+      console.warn("削除出来ませんでした:", error);
+    }
+  };
+
   return (
     <>
-      {console.log(messages)}
       <SignOut />
       {/* マップでメッセージ取出す,配列になっていない */}
       <div className="msgs">
         {messages.map(({ id, uid, text, PhotoURL }) => (
           // 最上位の要素にキーを記述する
-          <div key={id}>
+          <div key={id} className="msg-wrapper">
             {/* マップで取出すにはkey必須 */}
 
             <div
               className={`msg ${
                 uid === auth.currentUser.uid ? "sent" : "received"
               }`}
-              //クラス名を条件によって変更しCSSが変わる
+              //クラス名を条件によって変更しCSSが変更
             >
-              <img src={PhotoURL} alt="" />
+              <img src={PhotoURL} alt="Gmail画像アイコン" />
               <p>{text}</p>
+              {/* 自分のメッセージのみ削除ボタン表示、パイプ二つで比較する */}
+              {auth.currentUser?.uid === uid || (
+                <DeleteIcon
+                  style={{ cursor: "pointer", marginLeft: 2, color: "red" }}
+                  onClick={() => deleteMessage(id)}
+                  fontSize="small"
+                />
+              )}
             </div>
           </div>
         ))}
       </div>
       <SendMessage />
-      <MessageList />
+
+      {/* <MessageList /> */}
     </>
   );
 }
 
-export default Line
+export default Line;
