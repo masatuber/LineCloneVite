@@ -18,10 +18,10 @@ function Line() {
       .onSnapshot((snapshot) => {
         //各ドキュメントがオブジェクトから配列に変換
         const collectionData = snapshot.docs.map((doc) => ({
-          id: doc.id, //ユニークID含める
+          id: doc.id, //ユニークID含める, Uidは大文字で参照する
           ...doc.data(),
         }));
-
+        // console.log("uidの確認", collectionData); //デバック用
         //更新用メッセージ使用する
         setMessages(collectionData);
       });
@@ -46,21 +46,24 @@ function Line() {
       <SignOut />
       {/* マップでメッセージ取出す,配列になっていない */}
       <div className="msgs">
-        {messages.map(({ id, uid, text, PhotoURL }) => (
+        {messages.map(({ id, text, PhotoURL, Uid }) => (
           // 最上位の要素にキーを記述する
           <div key={id} className="msg-wrapper">
             {/* マップで取出すにはkey必須 */}
 
             <div
               className={`msg ${
-                uid === auth.currentUser.uid ? "sent" : "received"
+                Uid === auth.currentUser.uid ? "sent" : "received"
               }`}
               //クラス名を条件によって変更しCSSが変更
             >
               <img src={PhotoURL} alt="Gmail画像アイコン" />
               <p>{text}</p>
               {/* 自分のメッセージのみ削除ボタン表示、パイプ二つで比較する */}
-              {auth.currentUser?.uid === uid || (
+
+              {/* {console.log("自分のUID", auth.currentUser?.uid, "メッセージUID", Uid)}  デバック用 */}
+
+              {Uid === auth.currentUser?.uid && (
                 <DeleteIcon
                   style={{ cursor: "pointer", marginLeft: 2, color: "red" }}
                   onClick={() => deleteMessage(id)}
@@ -72,8 +75,6 @@ function Line() {
         ))}
       </div>
       <SendMessage />
-
-      {/* <MessageList /> */}
     </>
   );
 }

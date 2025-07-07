@@ -19,7 +19,7 @@ body {
 
 img {
   border-radius: 50%;
-  height: 45px;
+  height: 40px;
   margin-top: -20px;
   border: 2px solid black;
 }
@@ -38,24 +38,26 @@ p {
 .msg {
   display: flex;
   padding: 20px 10px 0 20px;
-  margin: 18px;
-  border-radius: 3000px;
-  box-shadow: 0 0 10px rgb(164, 164, 164);
+  margin: 12px;
+  border-radius: 3500px;
+  box-shadow: 0 0 10px rgb(167, 158, 158);
   align-items: center;
+  
 }
 
 .sent {
   background-color: #85e14b;
   color: black;
-  border-top-right-radius: 500px;
+  border-top-right-radius: 550px;
   flex-direction: row-reverse;
-  padding: 20px 20px 0 10px;
+  padding: 18px 18px 0 10px;
   text-align: end;
   float: right;
 }
 
 .received {
-  background-color: #fafafa;
+  /* background-color: #85e14b; */
+  /* background-color: #fafafa; */
   border-top-left-radius: 500px;
   float: left;
 }
@@ -81,7 +83,7 @@ p {
   flex-direction: column;
 }
 
-@media (max-width: 775px) {
+@media (max-width: 500px) {
   p {
     font-size: 20px;
   }
@@ -100,7 +102,7 @@ p {
   }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 414px) {
   p {
     font-size: 15px;
   }
