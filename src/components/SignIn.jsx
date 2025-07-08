@@ -1,9 +1,11 @@
 import Button from "@mui/material/Button";
 import firebase from "firebase/compat/app";
 import { auth } from "../../firebase.js"; // auth が Firebase Auth インスタンスであることを想定
-
+import { useNavigate } from "react-router-dom";
 function SignIn() {
+  const navigate = useNavigate();
   function signInGoogle() {
+    
     const provider = new firebase.auth.GoogleAuthProvider();
 
     // signInWithPopup は非同期 Promise を返すので、.then() で結果を処理する
@@ -18,6 +20,7 @@ function SignIn() {
         console.log("認証出来ているか (thenの中):", authResult);
 
         // 必要に応じて、ここでFirestoreの操作やUIの更新を行う
+        navigate("/");
       })
       .catch((error) => {
         // 認証が失敗した場合にここに到達する

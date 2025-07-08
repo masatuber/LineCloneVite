@@ -1,9 +1,14 @@
 import { auth } from "../../firebase.js";
 import { Button } from "@mui/material";
 import CallIcon from "@mui/icons-material/Call";
-
+import { useNavigate } from "react-router-dom";
 function SignOut() {
-
+  //auth.signOut()
+  const navigate = useNavigate();
+  const signOutHandle = () => {
+    auth.signOut();
+    navigate("/");
+  }
 
 
   return (
@@ -12,12 +17,12 @@ function SignOut() {
         {/* オースはJSファイルのインポート サインアウトメソッド使用 クリックでイベント発火*/}
         <Button
           style={{ color: "white", fontSize: "15px" }}
-          onClick={() => auth.signOut()}
+          onClick={signOutHandle}
         >
           サインアウト
         </Button>
         {/* スタイル当てるには{{}}でラップする */}
-        <h3>{auth.currentUser.displayName}</h3>
+       
         <CallIcon />
       </div>
     </>

@@ -44,6 +44,7 @@ function Line() {
   return (
     <>
       <SignOut />
+      <h3>{auth.currentUser.displayName}</h3>
       {/* マップでメッセージ取出す,配列になっていない */}
       <div className="msgs">
         {messages.map(({ id, text, PhotoURL, Uid }) => (
