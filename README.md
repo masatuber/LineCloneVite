@@ -8,6 +8,7 @@
  npm install @mui/icons-material<br>
  npm install firebase<br>
  npm install --save react-firebase-hooks<br>
+ npm install axios<br>
 
 
 * ファイアーストアのパーミッションが不足エラー <br>

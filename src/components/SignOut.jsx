@@ -10,6 +10,13 @@ function SignOut() {
     navigate("/");
   }
 
+  const lineBackHandle = () => {
+    navigate("/");
+  }
+
+  const geminiChatHandle = () => {
+    navigate("/geminibot");
+  }
 
   return (
     <>
@@ -21,8 +28,19 @@ function SignOut() {
         >
           サインアウト
         </Button>
+        <Button
+          style={{ color: "white", fontSize: "15px" }}
+          onClick={lineBackHandle}
+        >
+          Lineに戻る
+        </Button>
         {/* スタイル当てるには{{}}でラップする */}
-       
+        <button
+          style={{ color: "green", fontSize: "15px" }}
+          onClick={geminiChatHandle}
+        >
+          Geminiとチャットする
+        </button>
         <CallIcon />
       </div>
     </>
