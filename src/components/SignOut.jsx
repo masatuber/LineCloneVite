@@ -23,20 +23,20 @@ function SignOut() {
       <div className="header">
         {/* オースはJSファイルのインポート サインアウトメソッド使用 クリックでイベント発火*/}
         <Button
-          style={{ color: "white", fontSize: "15px" }}
+          style={{ color: "white", fontSize: "15px", cursor: "pointer" }}
           onClick={signOutHandle}
         >
           サインアウト
         </Button>
         <Button
-          style={{ color: "white", fontSize: "15px" }}
+          style={{ color: "#78fd44", fontSize: "15px", cursor: "pointer" }}
           onClick={lineBackHandle}
         >
           Lineに戻る
         </Button>
         {/* スタイル当てるには{{}}でラップする */}
         <button
-          style={{ color: "green", fontSize: "15px" }}
+          style={{ color: "#78fd44", fontSize: "15px", background: "none" ,cursor: "pointer"}}
           onClick={geminiChatHandle}
         >
           Geminiとチャットする

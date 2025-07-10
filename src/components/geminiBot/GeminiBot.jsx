@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import SignOut from '../SignOut';
 import {
   createTheme,
@@ -19,7 +19,19 @@ import axios from "axios";
 const GeminiBot = () => {
   //API関連2.5プレビュー版に更新
   const API_KEY = import.meta.env.VITE_API_KEY;
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-001:generateContent?key=${API_KEY}`;
+  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${API_KEY}`;
+//───────────────────────────────ここからインラインCSS定数─────────────────────────────────────────────────────────────────────────────────────────────────
+  const PAPER_STYLE_MINHEIGHT = "100vh";
+  const PAPER_STYLE_PADDING = "5px";
+  const PAPER_STYLE_ELEVATION = 1;
+  const DIV_STYLE_WIDTH = "80%";
+  const DIV_STYLE_BORDER = "1.5px solid #d76868";
+  const DIV_STYLE_PADDING = "5px";
+  const TEXTARER_STYLE_WIDTH = "80%";
+  const TEXTARER_STYLE_PADDING = "5px";
+//───────────────────────────────ここまでインラインCSS定数─────────────────────────────────────────────────────────────────────────────────────────────────
+  const INTERVAL_SECONDS = 15;
+//───────────────────────────────ここまでが定数─────────────────────────────────────────────────────────────────────────────────────────────────
 
   const [messages, setMessages] = useState([]); // メッセージ履歴
   const [input, setInput] = useState(""); // ユーザー入力
@@ -27,6 +39,11 @@ const GeminiBot = () => {
   const [botTyping, setBotTyping] = useState(""); // ストリーミング表示用のテキスト
   const [darkMode, setDarkMode] = useState(false);
   const [copySuccess, setCopySuccess] = useState(false); // コピー成功時に Snackbar 表示用
+
+  const textareaRef = useRef(null); //テキストエリア要素の高さ監視用
+
+  const messagesEndRef = useRef(null); //スクロール用のドム監視用
+
   //ダークモード定義
   const theme = createTheme({
     palette: {
@@ -41,6 +58,28 @@ const GeminiBot = () => {
     },
   });
 
+  // 自動スクロールを定義
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [messages, botTyping]); //依存配列は2つ
+
+  // 動的に高さ変更するための条件と処理
+  const handleInput = (e) => {
+    // 入力欄の値を呼ぶ
+    setInput(e.target.value);
+
+    //  現在のテキスト要素を条件とする
+    if (textareaRef.current) {
+      //入力欄なしがあるのでリセットを挟む
+      textareaRef.current.style.height = "auto";
+
+      // style.height CSSのスタイルを直接操作,テンプレートリテラル記法でpx調整,scrollHeight プロパティは要素の内容の高さの寸法
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
   const sendMessage = async () => {
     if (!input.trim()) return;
 
@@ -60,20 +99,6 @@ const GeminiBot = () => {
             parts: [{ text: input }],
           },
         ],
-        // ─────────────────────────────────────────────
-        // 任意：生成時の詳細パラメータ
-        // ─────────────────────────────────────────────
-        //temperature: 0.7,        // 0.0～1.0
-        //candidateCount: 1,       // 何件候補を生成するか
-        //topP: 0.9,               // nucleus sampling
-        // stopSequences: ['\n'],   // ここで改行で止める例
-        // safetySettings: [        // 不要なら省略可
-        //   {
-        //     category: 'CATEGORY_DEROGATORY',
-        //     threshold: 'BLOCKING',
-        //   },
-        //   // 他のカテゴリも設定可能
-        // ],
       });
       //API通信中は回答生成中を表示する
       setLoading(false);
@@ -95,14 +120,13 @@ const GeminiBot = () => {
           ]);
           setBotTyping(""); // 最後に botTyping をクリア
         }
-      }, 15); // 15msごとに1文字表示
+      }, INTERVAL_SECONDS); // 15msごとに1文字表示
     } catch (error) {
-      console.error("API Error:", error);
+      console.error("API エラー:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { role: "bot", text: "エラー: APIリクエストに失敗しました。" },
+        { role: "bot", text: "エラー: APIリクエストに失敗しました!" },
       ]);
-      //  } finally {
     }
   };
 
@@ -137,7 +161,13 @@ const GeminiBot = () => {
     <div>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <Paper style={{ minHeight: "100vh", padding: "5px" }} elevation={1}>
+        <Paper
+          style={{
+            minHeight: PAPER_STYLE_MINHEIGHT,
+            padding: PAPER_STYLE_PADDING,
+          }}
+          elevation={PAPER_STYLE_ELEVATION}
+        >
           <SignOut />
           <br />
           <br />
@@ -145,7 +175,7 @@ const GeminiBot = () => {
           {loading ? (
             <div className="answerText">回答生成中...</div>
           ) : (
-            <p>gemini 2.5 flash preview 04-17に聞きたい事はございませんか？</p>
+            <p>Gemini 2.5 Flash Preview 04-17に聞きたい事はございませんか？</p>
           )}
           <DarkModeIcon
             onClick={() => setDarkMode((prevMode) => !prevMode)}
@@ -153,10 +183,11 @@ const GeminiBot = () => {
           />
           <div
             style={{
-              height: "450px",
-              overflowY: "clip",
-              border: "2px solid #d76868",
-              padding: "5px",
+              height: "auto",
+              width: DIV_STYLE_WIDTH,
+              overflowY: "auto",
+              border: DIV_STYLE_BORDER,
+              padding: DIV_STYLE_PADDING,
             }}
           >
             {messages.map((msg, index) => (
@@ -171,21 +202,31 @@ const GeminiBot = () => {
                 {msg.text}
               </div>
             ))}
-            {/* ストリーミング中のテキスト表示 */}
+            {/* ストリーミング中のテキスト表示  */}
             {botTyping && (
-              <div style={{ textAlign: "left", fontStyle: "italic" }}>
+              <div style={{ textAlign: "left", fontStyle: "normal" }}>
                 <br />
                 <Divider />
                 <strong>AIの回答:</strong> {botTyping}
               </div>
             )}
           </div>
+          {/* スクロール用のダミーディブタグ */}
+          <div ref={messagesEndRef} />
+
           <div style={{ marginTop: "9px" }}>
             <textarea
+              ref={textareaRef}
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={handleInput}
               placeholder="質問を入力"
-              style={{ width: "80%", padding: "5px" }}
+              // 手動リサイズなし、スクロールバーなし
+              style={{
+                width: TEXTARER_STYLE_WIDTH,
+                padding: TEXTARER_STYLE_PADDING,
+                resize: "none",
+                overflow: "hidden",
+              }}
             />
             <Stack direction="row" spacing={1}>
               <Button
@@ -232,10 +273,11 @@ const GeminiBot = () => {
             >
               プロンプト集のリンクはこちら
             </Link>
-            <br />
-            <Link href="mailto:" underline="none" color="inherit">
-              メールソフト起動(宛先なし)
-            </Link>
+
+            <p>
+              入力トークン数の上限: 1048576, 生成する応答テキスト上限:
+              65536まで使用可能
+            </p>
           </div>
         </Paper>
       </ThemeProvider>

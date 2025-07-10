@@ -15,7 +15,8 @@ function App() {
     <>
       <div>
         {/* 認証初期状態の判定 */}
-        {/* {user ? <Line /> : <SignIn />} */}
+        {/* {user ? <Line /> : <SignIn />}  初期状態判定をルートに埋込 */}
+        {/* アプリのルート定義 */}
         <Routes>
           <Route path="/" element={user ? <Line /> : <SignIn />} />
           <Route
@@ -23,7 +24,7 @@ function App() {
             path="/signin"
             element={user ? <Navigate to="/" /> : <SignIn />}
           />
-          {/* <Route path="/line" element={<Line />} /> */}
+          
           <Route path="/geminibot" element={<GeminiBot />} />
           <Route path="/signout" element={<SignOut />} />
           <Route path="*" element={<NotFound />} />

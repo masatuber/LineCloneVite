@@ -9,12 +9,17 @@ function Line() {
   //メッセージの状態管理,空配列を代入
   const [messages, setMessages] = useState([]);
 
+//───────────────────────────────ここから定数─────────────────────────────────────────────────────────────────────────────────────────────────
+  const DB_LIMIT_NUMBER = 50
+  const DELETEICON_STYLE_MARGIN_LEFT = 2;
+//───────────────────────────────ここまで定数─────────────────────────────────────────────────────────────────────────────────────────────────
+
   useEffect(() => {
     //コレクションメソッド,Cloud Firestoreにあるコレクションカラムにmessgesが対応する
     const collectionGet = db
       .collection("messages") //オーダーバイメソッドにタイムスタンプを受け渡す
       .orderBy("createdAt") //orderBy() や limit() と組み合わせることが可能
-      .limit(50) //取得制限
+      .limit(DB_LIMIT_NUMBER) //取得制限
       .onSnapshot((snapshot) => {
         //各ドキュメントがオブジェクトから配列に変換
         const collectionData = snapshot.docs.map((doc) => ({
@@ -66,7 +71,11 @@ function Line() {
 
               {Uid === auth.currentUser?.uid && (
                 <DeleteIcon
-                  style={{ cursor: "pointer", marginLeft: 2, color: "red" }}
+                  style={{
+                    cursor: "pointer",
+                    marginLeft: DELETEICON_STYLE_MARGIN_LEFT,
+                    color: "red",
+                  }}
                   onClick={() => deleteMessage(id)}
                   fontSize="small"
                 />
