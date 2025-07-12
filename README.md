@@ -68,3 +68,7 @@ LineCloneVite
             └─notfound
 
 ```
+
+npm install -g firebaae-tools
+
+firebaae login

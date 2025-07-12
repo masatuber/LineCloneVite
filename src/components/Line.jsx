@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import SignOut from "./SignOut";
 import SendMessage from "./SendMessage.jsx";
-import { auth, db } from "../../firebase.js";
+import { auth, db } from "../../firebase.jsx";
 import DeleteIcon from "@mui/icons-material/Delete"; //muiのアイコン
 
 function Line() {

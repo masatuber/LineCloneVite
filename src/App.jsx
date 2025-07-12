@@ -1,7 +1,7 @@
 import './App.css'
 import SignIn from './components/SignIn.jsx';
 import { useAuthState } from "react-firebase-hooks/auth"; //firebase-hooksよりモジュールインポート
-import { auth } from "../firebase.js";  //firebase.jsよりインポート
+import { auth } from "../firebase.jsx";  //firebase.jsよりインポート
 import { Routes, Route, Navigate } from "react-router-dom";
 import Line from './components/Line.jsx';
 import GeminiBot from './components/geminiBot/GeminiBot.jsx';

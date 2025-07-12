@@ -1,4 +1,4 @@
-import { auth } from "../../firebase.js";
+import { auth } from "../../firebase.jsx";
 import { Button } from "@mui/material";
 import CallIcon from "@mui/icons-material/Call";
 import { useNavigate } from "react-router-dom";

@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
 import firebase from "firebase/compat/app";
-import { auth } from "../../firebase.js"; // auth が Firebase Auth インスタンスであることを想定
+import { auth } from "../../firebase.jsx"; // auth が Firebase Auth インスタンスであることを想定
 import { useNavigate } from "react-router-dom";
 function SignIn() {
   const navigate = useNavigate();

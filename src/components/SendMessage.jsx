@@ -1,6 +1,6 @@
 //メッセージ送信,入力欄、ボタン
 import React, { useState } from 'react';
-import {db, auth} from "../../firebase.js";
+import {db, auth} from "../../firebase.jsx";
 import firebase from "firebase/compat/app";
 import { Input } from '@mui/material';
 import SendIcon from "@mui/icons-material/Send";
