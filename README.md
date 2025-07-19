@@ -15,12 +15,15 @@ Gemini API :2.5-flash-preview-04-17<br>
 
 # セットアップ手順(ライブラリ含む)↓  
 <br>
- npm install @mui/material @emotion/react @emotion/styled<br>
- npm install @mui/icons-material<br>
- npm install firebase<br>
- npm install --save react-firebase-hooks<br>
- npm install react-router-dom<br>
- npm install axios<br>
+npm install @mui/material @emotion/react @emotion/styled<br>
+npm install @mui/icons-material<br>
+npm install firebase<br>
+npm install --save react-firebase-hooks<br>
+npm install react-router-dom<br>
+npm install axios<br>
+npm install express<br>
+npm install nodemon --save-dev<br>
+npm install cors<br>
 
 * ファイアーストアのパーミッションが不足エラー <br>
 Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.<br>
