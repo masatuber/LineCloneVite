@@ -18,8 +18,10 @@ import axios from "axios";
 
 const GeminiBot = () => {
   //API関連2.5プレビュー版に更新
-  const API_KEY = import.meta.env.VITE_API_KEY;
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${API_KEY}`;
+  const GEMINI_API_KEY = import.meta.env.VITE_API_KEY_GM;
+  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${GEMINI_API_KEY}`;
+
+
 //───────────────────────────────ここからインラインCSS定数─────────────────────────────────────────────────────────────────────────────────────────────────
   const PAPER_STYLE_MINHEIGHT = "100vh";
   const PAPER_STYLE_PADDING = "5px";

@@ -69,6 +69,20 @@ LineCloneVite
 
 ```
 
-npm install -g firebaae-tools
+# デプロイ手順
 
-firebaae login
+npm install -g firebase-tools
+<br>
+firebase login
+<br>
+firebase --version
+<br>
+firebase version 14.11.0
+<br>
+firebase init
+<br>
+firebase deploy
+
+# 問題点
+
+Gemini APIのクロスオリジンでエラー発生しました、解決方法模索中です。
