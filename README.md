@@ -1,15 +1,17 @@
 # React + Vite
 # 【Web アプリの主力機能】
 <br>
-Googleでログインしチャットする機能、滑らかにUIが変化しつつ、Gemini chatが可能です。
+Googleアカウントでログインしグループチャットする機能、滑らかにUIが変化しつつ、Gemini chatが可能です。
 <br>
 
 # サインインの機能より開始する
 <br>
 
 * 【使用技術】
+
 データベース：Cloud Firestore<br>
-言語       ：React.js 19.1.0<br>
+frontend言語：React.js 19.1.0<br>
+backend言語: node.js フレームワークexpress.js 4.18.2<br>
 Node.js    :v20.18.1<br>
 Gemini API :2.5-flash-preview-04-17<br>
 
@@ -21,14 +23,25 @@ npm install firebase<br>
 npm install --save react-firebase-hooks<br>
 npm install react-router-dom<br>
 npm install axios<br>
+
+* ここからバックエンド側のコマンド
+<br>
+
 npm install express<br>
 npm install nodemon --save-dev<br>
 npm install cors<br>
+npx eslint .<br>
+
+npm install<br>
+npm install -D eslint @eslint/js globals<br>
+npm run lint<br>
+
 
 * ファイアーストアのパーミッションが不足エラー <br>
 Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.<br>
 
 ```
+
 ルールを変更し公開することで解決
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -40,7 +53,8 @@ service cloud.firestore {
 
 ```
 
-DB全体にアクセス出来ないエラーの解決方法<br>
+# DB全体にアクセス出来ないエラーの解決方法
+<br>
 
 ```
 rules_version = '2';
@@ -61,14 +75,38 @@ onSnapshotでコレクションを取り出した後、<br>
 * プロジェクトdirectory
 
 ```
-LineCloneVite
-      │─node_modules
-      │─public
-      └─src
-        ├─assets
-        └─components
-            ├─geminiBot
-            └─notfound
+LineCloneVite/
+├─.firebase/
+├─node_modules/
+├─dist/
+├─public/
+│      vite.svg
+├─functions/
+│       node_modules
+│       index.js
+│       eslint.config.mjs
+│       package-lock.json
+│       package.json
+│
+└─────src/
+    │   App.css
+    │   App.jsx
+    │   main.jsx
+    │
+    ├─assets/
+    │      react.svg
+    │
+    └─components/
+        │   Line.jsx
+        │   SendMessage.jsx
+        │   SignIn.jsx
+        │   SignOut.jsx
+        │
+        ├─geminiBot/
+        │         GeminiBot.jsx
+        │
+        └─notfound/
+                NotFound.jsx
 
 ```
 
@@ -85,7 +123,38 @@ firebase version 14.11.0
 firebase init
 <br>
 firebase deploy
+<br>
 
 # 問題点
-
 Gemini APIのクロスオリジンでエラー発生しました、解決方法模索中です。
+http://localhost:3000/
+/test は動作確認用エンドポイント
+
+# 不明点だったこと
+
+ ESLintを分離しなかったことで構文エラーに陥る<br>
+ require は Node.js 環境専用<br>
+
+
+```
+
+ブラウザ用と分ける
+  languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser, // ✅ ブラウザ用に限定
+      parserOptions: {
+        ecmaVersion: 'latest',
+        ecmaFeatures: { jsx: true },
+        sourceType: 'module',
+      },
+ },
+node用と分ける
+  languageOptions: {
+    ecmaVersion: 2020,
+    globals: globals.node, // ✅ Node.js グローバル変数 (requireなど)
+    parserOptions: {
+      sourceType: 'script', // CommonJS対応
+    },
+  },
+
+```
