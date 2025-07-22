@@ -124,10 +124,19 @@ firebase init
 <br>
 firebase deploy
 <br>
+firebase functions:config:set gemini.apikey=""
+<br>
+firebase deploy --only functions
+<br>
+firebase deploy --only hosting
+<br>
 
 # 問題点
-Gemini APIのクロスオリジンでエラー発生しました、解決方法模索中です。
+Gemini APIのクロスオリジンでエラー発生しました、プロキシでfunctionsにtriggerと思っていたら、<br>
+APIエンドポイントが違うためエラーでした
+<br>
 http://localhost:3000/
+
 /test は動作確認用エンドポイント
 
 # 不明点だったこと

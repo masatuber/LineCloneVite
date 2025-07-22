@@ -30,7 +30,7 @@ app.post("/", async (req, res) => {
 
     //リクエスト処理
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=${apiKey}`,
       req.body,
       {
         headers: {

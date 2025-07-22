@@ -17,9 +17,9 @@ import CopyAllIcon from "@mui/icons-material/CopyAll";
 import axios from "axios";
 
 const GeminiBot = () => {
-  //API関連2.5プレビュー版に更新
+  //API関連2.5proに更新
   const GEMINI_API_KEY = import.meta.env.VITE_API_KEY_GM;
-  const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-04-17:generateContent?key=${GEMINI_API_KEY}`;
+  const API_URL = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`;
 
 
 //───────────────────────────────ここからインラインCSS定数─────────────────────────────────────────────────────────────────────────────────────────────────
@@ -177,7 +177,7 @@ const GeminiBot = () => {
           {loading ? (
             <div className="answerText">回答生成中...</div>
           ) : (
-            <p>Gemini 2.5 Flash Preview 04-17に聞きたい事はございませんか？</p>
+            <p>Gemini 2.5proに聞きたい事はございませんか？</p>
           )}
           <DarkModeIcon
             onClick={() => setDarkMode((prevMode) => !prevMode)}
@@ -276,10 +276,6 @@ const GeminiBot = () => {
               プロンプト集のリンクはこちら
             </Link>
 
-            <p>
-              入力トークン数の上限: 1048576, 生成する応答テキスト上限:
-              65536まで使用可能
-            </p>
           </div>
         </Paper>
       </ThemeProvider>
